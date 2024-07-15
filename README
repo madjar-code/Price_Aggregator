@@ -1,0 +1,31 @@
+# Price Aggregator Platform
+
+This project is a simple Price Aggregator Platform that fetches prices from multiple URLs asynchronously, calculates the average price, and saves the data into database (or another storage)
+
+## Features
+
+- Asynchronously fetch prices from multiple URLs.
+- Calculate the average price of the fetched data.
+- Save the prices and URLs into a storage.
+
+## Requirements
+
+- Python 3.7+
+
+## Installation
+
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/madjar-code/Price_Aggregator
+    ```
+
+2. **Create a virtual environment**:
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
+
+3. **Install the required libraries**:
+    ```bash
+    pip install aiohttp asyncpg
+    ```
