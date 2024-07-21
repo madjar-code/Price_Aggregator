@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - init_db
+
+  init_db:
+    image: python:3.9
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ["python", "init_db.py"]
