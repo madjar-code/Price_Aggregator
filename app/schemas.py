@@ -1,3 +1,4 @@
+from uuid import UUID
 from pydantic import BaseModel
 from typing import List, Optional
 
@@ -8,12 +9,12 @@ class ProductBase(BaseModel):
 
 
 class ProductCreate(ProductBase):
-    category_id: int
+    category_id: UUID
 
 
 class Product(ProductCreate):
-    id: int
-    category_id: int
+    id: UUID
+    category_id: UUID
 
     class Config:
         orm_mode = True
@@ -28,7 +29,7 @@ class CategoryCreate(CategoryBase):
 
 
 class Category(CategoryBase):
-    id: int
+    id: UUID
     products: List[Product] = []
 
     class Config:

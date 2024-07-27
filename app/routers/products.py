@@ -1,8 +1,9 @@
+from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from .. import crud, models, schemas
-from ..database import SessionLocal, engine, get_db
+from ..database import engine, get_db
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -25,7 +26,7 @@ def create_product(
 
 @router.get('/{product_id}', response_model=schemas.Product)
 def read_product(
-    product_id: int,
+    product_id: UUID,
     db: Session = Depends(get_db)
 ):
     db_product = crud.get_product(db, product_id=product_id)

@@ -1,6 +1,7 @@
+from uuid import UUID
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
 from .. import crud, models, schemas
 from ..database import SessionLocal, engine, get_db
 
@@ -25,7 +26,7 @@ def create_category(
 
 @router.get('/{category_id}', response_model=schemas.Category)
 def read_category(
-    category_id: int,
+    category_id: UUID,
     db: Session = Depends(get_db)
 ):
     db_category = crud.get_category(db, category_id=category_id)
