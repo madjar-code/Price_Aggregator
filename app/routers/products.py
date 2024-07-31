@@ -21,6 +21,12 @@ def create_product(
     product: schemas.ProductCreate,
     db: Session = Depends(get_db)
 ):
+    category = crud.get_category(db, category_id=product.category_id)
+    if category is None:
+        raise HTTPException(
+            status_code=404,
+            detail='Category not found'
+        )
     return crud.create_product(db=db, product=product)
 
 
@@ -31,7 +37,10 @@ def read_product(
 ):
     db_product = crud.get_product(db, product_id=product_id)
     if db_product is None:
-        raise HTTPException(status_code=404, detail='Product not found')
+        raise HTTPException(
+            status_code=404,
+            detail='Product not found'
+        )
     return db_product
 
 

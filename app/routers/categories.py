@@ -31,7 +31,10 @@ def read_category(
 ):
     db_category = crud.get_category(db, category_id=category_id)
     if db_category is None:
-        raise HTTPException(status_code=404, detail='Category not found')
+        raise HTTPException(
+            status_code=404,
+            detail='Category not found'
+        )
     return db_category
 
 
