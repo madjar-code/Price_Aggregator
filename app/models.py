@@ -15,7 +15,7 @@ class Product(Base):
         index=True
     )
     name = Column(String, index=True)
-    description = Column(String, index=True)
+    description = Column(String)
     category_id = Column(PG_UUID, ForeignKey('categories.id'))
 
     category = relationship('Category', back_populates='products')
