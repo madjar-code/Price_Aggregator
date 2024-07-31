@@ -1,8 +1,9 @@
+from uuid import UUID
 from sqlalchemy.orm import Session
 from . import models, schemas
 
 
-def get_product(db: Session, product_id: int):
+def get_product(db: Session, product_id: UUID):
     return db.query(models.Product).\
         filter(models.Product.id == product_id).\
         first()
@@ -20,7 +21,7 @@ def create_product(db: Session, product: schemas.ProductCreate):
     return db_product
 
 
-def get_category(db: Session, category_id: int):
+def get_category(db: Session, category_id: UUID):
     return db.query(models.Category).\
         filter(models.Category.id == category_id).\
         first()
