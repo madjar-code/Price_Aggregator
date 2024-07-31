@@ -1,36 +1,26 @@
 from uuid import UUID
-from pydantic import BaseModel
 from typing import List, Optional
+from pydantic import BaseModel, Field
 
 
-class ProductBase(BaseModel):
-    name: str
-    description: Optional[str] = None
+class CategoryCreate(BaseModel):
+    name: str = Field(..., max_length=50)
 
 
-class ProductCreate(ProductBase):
+class Category(BaseModel):
+    id: UUID
+    name: str = Field(..., max_length=50)
+    products: List['Product'] = []
+
+
+class ProductCreate(BaseModel):
+    name: str = Field(..., max_length=50)
+    description: Optional[str] = Field(..., min_length=5, max_length=150)
     category_id: UUID
 
 
-class Product(ProductCreate):
+class Product(BaseModel):
     id: UUID
-    category_id: UUID
-
-    class Config:
-        orm_mode = True
-
-
-class CategoryBase(BaseModel):
     name: str
-
-
-class CategoryCreate(CategoryBase):
-    pass
-
-
-class Category(CategoryBase):
-    id: UUID
-    products: List[Product] = []
-
-    class Config:
-        orm_mode = True
+    description: Optional[str]
+    category_id: UUID
