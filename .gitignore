@@ -125,6 +125,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+Pydantic_Examples.ipynb
 
 # IPython
 profile_default/
