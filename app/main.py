@@ -26,5 +26,5 @@ app.include_router(categories.router)
 @app.get("/")
 def read_root():
     return {
-        "message": "Welcome to the FastAPI SQLite example"
+        "message": "Welcome to the FastAPI example"
     }
