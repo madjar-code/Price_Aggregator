@@ -125,6 +125,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+Pydantic_Examples.ipynb
 
 # IPython
 profile_default/
@@ -135,5 +136,3 @@ contacts.xlsx
 
 /*.json
 tasks.last
-
-Pydantic_Examples.ipynb
