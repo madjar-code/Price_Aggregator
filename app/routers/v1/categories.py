@@ -2,13 +2,13 @@ from uuid import UUID
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app import crud
 from app.schemas.category_schema import (
-    Category,
-    CategoryCreate,
+    CategoryIn,
+    CategoryOut,
 )
 from app.config.database import get_db
-
+from app.repositories.category_repository import \
+    CategoryRepository
 
 router = APIRouter(
     prefix='/categories',
@@ -17,33 +17,32 @@ router = APIRouter(
 )
 
 
-@router.post('/', response_model=Category)
+@router.post('/', response_model=CategoryOut)
 def create_category(
-    category: CategoryCreate,
+    category: CategoryIn,
     db: Session = Depends(get_db)
 ):
-    return crud.create_category(db=db, category=category)
+    return CategoryRepository(db).create(category)
 
 
-@router.get('/{category_id}', response_model=Category)
+@router.get('/{category_id}', response_model=CategoryOut)
 def read_category(
     category_id: UUID,
     db: Session = Depends(get_db)
 ):
-    db_category = crud.get_category(db, category_id=category_id)
-    if db_category is None:
+    category_record = CategoryRepository(db).get_by_id(category_id)
+    if category_record is None:
         raise HTTPException(
             status_code=404,
             detail='Category not found'
         )
-    return db_category
+    return category_record
 
 
-@router.get('/', response_model=List[Category])
+@router.get('/', response_model=List[CategoryOut])
 def read_categories(
     skip: int = 0,
     limit: int = 10,
     db: Session = Depends(get_db)
 ):
-    categories = crud.get_categories(db, skip, limit)
-    return categories
+    return CategoryRepository(db).get_all(skip, limit)
