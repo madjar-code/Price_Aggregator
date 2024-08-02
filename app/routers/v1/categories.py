@@ -2,11 +2,12 @@ from uuid import UUID
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from .. import crud, models, schemas
-from ..database import SessionLocal, engine, get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app import crud
+from app.schemas.category_schema import (
+    Category,
+    CategoryCreate,
+)
+from app.config.database import get_db
 
 
 router = APIRouter(
@@ -16,15 +17,15 @@ router = APIRouter(
 )
 
 
-@router.post('/', response_model=schemas.Category)
+@router.post('/', response_model=Category)
 def create_category(
-    category: schemas.CategoryCreate,
+    category: CategoryCreate,
     db: Session = Depends(get_db)
 ):
     return crud.create_category(db=db, category=category)
 
 
-@router.get('/{category_id}', response_model=schemas.Category)
+@router.get('/{category_id}', response_model=Category)
 def read_category(
     category_id: UUID,
     db: Session = Depends(get_db)
@@ -38,7 +39,7 @@ def read_category(
     return db_category
 
 
-@router.get('/', response_model=List[schemas.Category])
+@router.get('/', response_model=List[Category])
 def read_categories(
     skip: int = 0,
     limit: int = 10,

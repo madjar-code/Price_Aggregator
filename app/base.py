@@ -1,2 +1,3 @@
-from .database import Base
-from .models import Product, Category
+from .config.database import Base
+from .models.category import Category
+from .models.product import Product

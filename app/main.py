@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import products, categories
-from app.database import engine, Base
+from app.routers.api import router
+from app.config.database import engine, Base
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(
+    debug=True,
+    title='Price Aggregator V1s'
+)
 
 origins = [
     "http://localhost:3000",
@@ -19,11 +22,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(products.router)
-app.include_router(categories.router)
+app.include_router(router)
 
 
-@app.get("/")
+@app.get("/api/v1")
 def read_root():
     return {
         "message": "Welcome to the FastAPI example"

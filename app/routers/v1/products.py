@@ -2,11 +2,12 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from .. import crud, models, schemas
-from ..database import engine, get_db
-
-
-models.Base.metadata.create_all(bind=engine)
+from app import crud
+from app.schemas.product_schema import (
+    Product,
+    ProductCreate,
+)
+from app.config.database import get_db
 
 
 router = APIRouter(
@@ -16,9 +17,9 @@ router = APIRouter(
 )
 
 
-@router.post('/', response_model=schemas.Product)
+@router.post('/', response_model=Product)
 def create_product(
-    product: schemas.ProductCreate,
+    product: ProductCreate,
     db: Session = Depends(get_db)
 ):
     category = crud.get_category(db, category_id=product.category_id)
@@ -30,7 +31,7 @@ def create_product(
     return crud.create_product(db=db, product=product)
 
 
-@router.get('/{product_id}', response_model=schemas.Product)
+@router.get('/{product_id}', response_model=Product)
 def read_product(
     product_id: UUID,
     db: Session = Depends(get_db)
@@ -44,7 +45,7 @@ def read_product(
     return db_product
 
 
-@router.get('/', response_model=List[schemas.Product])
+@router.get('/', response_model=List[Product])
 def read_products(
     skip: int = 0,
     limit: int = 10,
