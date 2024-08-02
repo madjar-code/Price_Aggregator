@@ -3,13 +3,13 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 
-class ProductCreate(BaseModel):
+class ProductIn(BaseModel):
     name: str = Field(..., max_length=50)
     description: Optional[str] = Field(..., min_length=5, max_length=150)
     category_id: UUID
 
 
-class Product(BaseModel):
+class ProductOut(BaseModel):
     id: UUID
     name: str
     description: Optional[str]
