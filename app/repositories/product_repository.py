@@ -12,11 +12,11 @@ class ProductRepository:
     def __init__(self, db: Session) -> None:
         self.db = db
 
-    def get_by_id(self, _id: UUID) -> Optional[Type[ProductOut]]:
-        return self.db.query(ProductOut).filter_by(id=_id).first()
+    def get_by_id(self, _id: UUID) -> Optional[Type[Product]]:
+        return self.db.query(Product).filter_by(id=_id).first()
 
-    def get_all(self, skip: int, limit: int) -> List[ProductOut]:
-        return self.db.query(ProductOut).offset(skip).limit(limit).all()
+    def get_all(self, skip: int, limit: int) -> List[Type[Product]]:
+        return self.db.query(Product).offset(skip).limit(limit).all()
 
     def create(self, data: ProductIn) -> Product:
         product_record = Product(
