@@ -5,7 +5,7 @@ from .product_schema import ProductOut
 
 
 class CategoryIn(BaseModel):
-    name: str = Field(..., max_length=50)
+    name: str = Field(..., min_length=1, max_length=50)
 
 
 class CategoryOut(BaseModel):
