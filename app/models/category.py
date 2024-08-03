@@ -14,6 +14,10 @@ class Category(Base):
         default=uuid.uuid4,
         index=True
     )
-    name = Column(String, index=True)
+    name = Column(
+        String,
+        nullable=False,
+        index=True
+    )
 
     products = relationship('Product', back_populates='category')
