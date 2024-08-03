@@ -16,7 +16,11 @@ class Product(Base):
     )
     name = Column(String, index=True)
     description = Column(String)
-    category_id = Column(UUID, ForeignKey('categories.id'))
+    category_id = Column(
+        UUID,
+        ForeignKey('categories.id'),
+        nullable=True,
+    )
     # links = Column(ARRAY(String), nullable=True)
 
     category = relationship('Category', back_populates='products')
