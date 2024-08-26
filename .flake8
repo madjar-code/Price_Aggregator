@@ -1,4 +1,4 @@
 [flake8]
 exclude = migrations,settings.py,venv,env
-max-line-length = 79
+max-line-length = 100
 ignore = F401
