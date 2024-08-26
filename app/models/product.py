@@ -23,4 +23,12 @@ class Product(Base):
     )
     # links = Column(ARRAY(String), nullable=True)
 
-    category = relationship('Category', back_populates='products')
+    category = relationship(
+        'Category',
+        back_populates='products'
+    )
+    sources = relationship(
+        'InfoResource',
+        back_populates='product',
+        cascade='all, delete-orphan'
+    )
