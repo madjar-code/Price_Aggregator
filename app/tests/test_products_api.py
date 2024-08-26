@@ -1,11 +1,10 @@
-import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from uuid import uuid4
+from ..models.product import Product
 from app.models.category import Category
-from app.models.product import Product
 
-BASE_URL = "/api/v1/products"
+BASE_URL = '/api/v1/products'
 
 
 def test_create_product(client: TestClient, db_session: Session):

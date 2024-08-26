@@ -6,6 +6,11 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.models.product import Product
+from app.models.info_resource import (
+    InfoResource,
+    ResourceState
+)
 from app.config.database import get_db, Base
 from app.main import app
 
@@ -64,3 +69,36 @@ def client(db_session: Session) -> Generator[TestClient, Any, None]:
     app.dependency_overrides[get_db] = _get_test_db
     with TestClient(app) as client:
         yield client
+
+
+@pytest.fixture
+def test_product(db_session: Session) -> Product:
+    """
+    Fixture to create a test product in the database.
+    """
+    product = Product(name='Test Product')
+    db_session.add(product)
+    db_session.commit()
+    db_session.refresh(product)
+    return product
+
+
+@pytest.fixture
+def test_resource(
+    db_session: Session,
+    test_product: Product
+) -> InfoResource:
+    """
+    Fixture to create a test info resource linked
+    to the test product in the database.
+    """
+    resource = InfoResource(
+        url='https://example.com',
+        state=ResourceState.ACTIVE,
+        name='Test Resource',
+        product_id=test_product.id
+    )
+    db_session.add(resource)
+    db_session.commit()
+    db_session.refresh(resource)
+    return resource
