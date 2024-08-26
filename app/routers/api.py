@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.routers.v1 import categories, products
+from app.routers.v1 import categories, products, resources
 
 
 router = APIRouter(
@@ -9,3 +9,4 @@ router = APIRouter(
 
 router.include_router(categories.router)
 router.include_router(products.router)
+router.include_router(resources.router)
